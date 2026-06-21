@@ -20,6 +20,12 @@ Prosty projekt Mailer w Pythonie z Flask, służący do zarządzania subskrybent
 
 ## Instalacja
 
+### Opcja 1: Automatyczna (Windows)
+
+Dwuklik na `setup.bat` w katalogu projektu. Skrypt utworzy środowisko wirtualne, zainstaluje wymagane pakiety i zaktualizuje pip.
+
+### Opcja 2: Ręczna
+
 1. Utwórz i aktywuj środowisko wirtualne:
 
 ```bash
@@ -72,19 +78,25 @@ Aplikację otwórz w przeglądarce pod adresem: `http://127.0.0.1:5000`
 
 ## Testowanie wysyłania maili
 
-Aby testować wysyłanie maili, musisz uruchomić testowy serwer SMTP:
+Aplikacja domyślnie używa `localhost:1025` jako serwera SMTP. Jeśli ten serwer nie działa, wiadomości są zapisywane do pliku `demo_emails.log`.
 
 ### Opcja 1: Automatyczne (Windows)
 
-Dwuklik na `start-smtp-server.bat` - uruchomi mock serwer SMTP, który drukuje wszystkie maile w konsoli.
+Dwuklik na `start-smtp-server.bat` - uruchomi lokalny serwer SMTP do testów.
 
 ### Opcja 2: Ręczne
 
+Plik `start-smtp-server.bat` używa polecenia `python -m smtpd`, które może nie działać w nowszych wersjach Pythona. Jeśli nie działa, użyj alternatywy z modułem `aiosmtpd` lub sprawdź plik `mock_smtp_server.py`.
+
+### Uruchomienie mock SMTP z Pythona
+
+Jeśli chcesz uruchomić serwer w Pythonie bez `smtpd`:
+
 ```bash
-python -m smtpd -c DebuggingServer -n localhost:1025
+python mock_smtp_server.py
 ```
 
-Uruchom to w osobnym oknie terminala/PowerShell. Maile będą drukowane w konsoli zamiast być wysyłane.
+Uruchom to w osobnym oknie terminala/PowerShell. Maile będą drukowane w konsoli lub zapisywane do `demo_emails.log`.
 
 ## Testy
 
@@ -106,10 +118,10 @@ pytest
 
 ## Uwaga
 
-W środowisku deweloperskim możesz skorzystać z lokalnego serwera SMTP do testów, np.:
+Jeśli używasz Pythona 3.12+ i `python -m smtpd` nie działa, uruchom `mock_smtp_server.py` zamiast tego:
 
 ```bash
-python -m smtpd -c DebuggingServer -n localhost:1025
+python mock_smtp_server.py
 ```
 
-Dzięki temu maile nie będą rzeczywiście wysyłane, tylko wyświetlone w konsoli.
+Wszystkie maile zostaną wydrukowane w konsoli serwera lub zapisane do `demo_emails.log`.
