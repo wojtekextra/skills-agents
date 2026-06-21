@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+.pytest_cache/
+.coverage
+*.log
+*.pyc
+*.pyo
+*.pyd
+*.swp
+.DS_Store
+.env
+.env.*
+*.sqlite3
+test_subscribers.json
